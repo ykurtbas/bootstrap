@@ -11,7 +11,7 @@ angular.module('ui.bootstrap.timepicker', [])
 })
 
 .controller('TimepickerController', ['$scope', '$attrs', '$parse', '$log', '$locale', 'timepickerConfig', function($scope, $attrs, $parse, $log, $locale, timepickerConfig) {
-  var selected = new Date(),
+  var selected = moment().toJsDateWithTimezone(),
       ngModelCtrl = { $setViewValue: angular.noop }, // nullModelCtrl
       meridians = angular.isDefined($attrs.meridians) ? $scope.$parent.$eval($attrs.meridians) : timepickerConfig.meridians || $locale.DATETIME_FORMATS.AMPMS;
 
@@ -20,7 +20,7 @@ angular.module('ui.bootstrap.timepicker', [])
     ngModelCtrl.$render = this.render;
 
     ngModelCtrl.$formatters.unshift(function (modelValue) {
-      return modelValue ? new Date( modelValue ) : null;
+      return modelValue ? moment( modelValue).toJsDateWithTimezone() : null;
     });
 
     var hoursInputEl = inputs.eq(0),

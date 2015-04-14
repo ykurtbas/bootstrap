@@ -18,6 +18,7 @@ module.exports = function(config) {
       'misc/test-lib/jquery-1.8.2.min.js',
       'node_modules/angular/angular.js',
       'node_modules/angular-mocks/angular-mocks.js',
+      'node_modules/moment/moment.js',
       'misc/test-lib/helpers.js',
       'src/**/*.js',
       'template/**/*.js'
