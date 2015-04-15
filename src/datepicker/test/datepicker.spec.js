@@ -13,13 +13,13 @@ describe('datepicker directive', function () {
         require: 'ngModel',
         link: function(scope, element, attrs, modelController) {
           modelController.$formatters.push(function(object) {
-            return new Date(object.date);
+            return moment(object.date);
           });
 
           modelController.$parsers.push(function(date) {
             return {
               type: 'date',
-              date: date.toUTCString()
+              date: date.format()
             };
           });
         }

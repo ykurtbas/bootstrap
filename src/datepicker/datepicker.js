@@ -1,7 +1,7 @@
 angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootstrap.position'])
 
 .constant('datepickerConfig', {
-  formatDay: 'D',
+  formatDay: 'DD',
   formatMonth: 'MMMM',
   formatYear: 'YYYY',
   formatDayHeader: 'ddd',
@@ -335,7 +335,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
 
       ctrl._refreshView = function() {
         var months = new Array(12),
-            year = ctrl.activeDate.getFullYear();
+            year = ctrl.activeDate.year();
 
         for ( var i = 0; i < 12; i++ ) {
           months[i] = angular.extend(ctrl.createDateObject(moment([year, i, 1]), ctrl.formatMonth), {
