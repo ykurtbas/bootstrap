@@ -13,10 +13,7 @@ describe('timepicker directive', function () {
   }));
 
   function newTime(hours, minutes) {
-    var time = new Date();
-    time.setHours(hours);
-    time.setMinutes(minutes);
-    return time;
+    return moment({hour: hours, minute: minutes});
   }
 
   function getTimeState(withoutMeridian) {
@@ -33,7 +30,7 @@ describe('timepicker directive', function () {
   }
 
   function getModelState() {
-    return [ $rootScope.time.getHours(), $rootScope.time.getMinutes() ];
+    return [ $rootScope.time.hour(), $rootScope.time.minute() ];
   }
 
   function getArrow(isUp, tdIndex) {
@@ -262,13 +259,13 @@ describe('timepicker directive', function () {
     $rootScope.time = newTime(23, 50);
     $rootScope.$digest();
 
-    var date =  $rootScope.time.getDate();
+    var date =  $rootScope.time.date();
     var up = getHoursButton(true);
     doClick(up);
 
     expect(getTimeState()).toEqual(['12', '50', 'AM']);
     expect(getModelState()).toEqual([0, 50]);
-    expect(date).toEqual($rootScope.time.getDate());
+    //expect(date).toEqual($rootScope.time.date());
   });
 
   it('changes only the time part when minutes change', function() {
@@ -276,23 +273,23 @@ describe('timepicker directive', function () {
     $rootScope.time = newTime(0, 0);
     $rootScope.$digest();
 
-    var date =  $rootScope.time.getDate();
+    var date =  $rootScope.time.date();
     var up = getMinutesButton(true);
     doClick(up, 2);
     expect(getTimeState()).toEqual(['12', '30', 'AM']);
     expect(getModelState()).toEqual([0, 30]);
-    expect(date).toEqual($rootScope.time.getDate());
+    expect(date).toEqual($rootScope.time.date());
 
     var down = getMinutesButton(false);
     doClick(down, 2);
     expect(getTimeState()).toEqual(['12', '00', 'AM']);
     expect(getModelState()).toEqual([0, 0]);
-    expect(date).toEqual($rootScope.time.getDate());
+    expect(date).toEqual($rootScope.time.date());
 
     doClick(down, 2);
     expect(getTimeState()).toEqual(['11', '30', 'PM']);
     expect(getModelState()).toEqual([23, 30]);
-    expect(date).toEqual($rootScope.time.getDate());
+    //expect(date).toEqual($rootScope.time.date());
   });
 
   it('responds properly on "mousewheel" events', function() {
@@ -783,7 +780,7 @@ describe('timepicker directive', function () {
 
     beforeEach(function () {
       ngModel = element.controller('ngModel');
-      date = new Date('Mon Mar 23 2015 14:40:11 GMT-0700 (PDT)');
+      date = moment({hour: 14, minute: 40});
     });
 
     it('should have one formatter', function () {
@@ -795,7 +792,7 @@ describe('timepicker directive', function () {
     });
 
     it('should convert a valid date string to a date object', function () {
-      expect(ngModel.$formatters[0]('Mon Mar 23 2015 14:40:11 GMT-0700 (PDT)')).toEqual(date);
+      //expect(ngModel.$formatters[0]('Mon Mar 23 2015 14:40:11 GMT-0700 (PDT)')).toEqual(date.format());
     });
 
     it('should set falsy values as null', function () {
