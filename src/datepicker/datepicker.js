@@ -241,27 +241,26 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
         var dates = new Array(n), current = moment(startDate), i = 0;
         current.hour(12); // Prevent repeated dates because of timezone bug
         while ( i < n ) {
-          dates[i++] = moment(current);
+          dates[i++] = current.clone();
           current.add(1, 'day');
         }
         return dates;
       }
 
       ctrl._refreshView = function() {
-        var year = ctrl.activeDate.year(),
-          month = ctrl.activeDate.month(),
-          firstDayOfMonth = moment([year, month, 1]),
+        var month = ctrl.activeDate.month(),
+          firstDayOfMonth = ctrl.activeDate.clone().date(1),
           difference = ctrl.startingDay - firstDayOfMonth.day(),
           numDisplayedFromPreviousMonth = (difference > 0) ? 7 - difference : - difference,
-          firstDate = moment(firstDayOfMonth);
+          firstDate = firstDayOfMonth.clone();
 
         if ( numDisplayedFromPreviousMonth > 0 ) {
           firstDate.date( - numDisplayedFromPreviousMonth + 1 );
         }
 
-        // 42 is the number of days on a six-month calendar
-        var days = getDates(firstDate, 42);
-        for (var i = 0; i < 42; i ++) {
+        // 352 is the number of days on a five-week calendar
+        var days = getDates(firstDate, 35);
+        for (var i = 0; i < 35; i ++) {
           days[i] = angular.extend(ctrl.createDateObject(days[i], ctrl.formatDay), {
             secondary: days[i].month() !== month,
             uid: scope.uniqueId + '-' + i
