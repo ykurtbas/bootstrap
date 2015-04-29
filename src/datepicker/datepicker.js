@@ -258,9 +258,9 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
           firstDate.date( - numDisplayedFromPreviousMonth + 1 );
         }
 
-        // 352 is the number of days on a five-week calendar
-        var days = getDates(firstDate, 35);
-        for (var i = 0; i < 35; i ++) {
+        // 42 is the number of days on a six-month calendar
+        var days = getDates(firstDate, 42);
+        for (var i = 0; i < 42; i ++) {
           days[i] = angular.extend(ctrl.createDateObject(days[i], ctrl.formatDay), {
             secondary: days[i].month() !== month,
             uid: scope.uniqueId + '-' + i
