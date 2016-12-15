@@ -23,7 +23,7 @@ describe('collapse directive', function () {
   it('should be hidden on initialization if isCollapsed = true without transition', function() {
     scope.isCollapsed = true;
     scope.$digest();
-    $animate.triggerCallbacks();
+    $animate.flush();
     //No animation timeout here
     expect(element.height()).toBe(0);
   });
@@ -33,7 +33,7 @@ describe('collapse directive', function () {
     scope.$digest();
     scope.isCollapsed = true;
     scope.$digest();
-    $animate.triggerCallbacks();
+    $animate.flush();
     expect(element.height()).toBe(0);
   });
 
@@ -51,7 +51,7 @@ describe('collapse directive', function () {
     scope.$digest();
     scope.isCollapsed = false;
     scope.$digest();
-    $animate.triggerCallbacks();
+    $animate.flush();
     expect(element.height()).not.toBe(0);
   });
 
@@ -64,9 +64,9 @@ describe('collapse directive', function () {
     scope.$digest();
     scope.isCollapsed = true;
     scope.$digest();
-    $animate.triggerCallbacks();
+    $animate.flush();
     expect(element.height()).toBe(0);
-    $animate.triggerCallbacks();
+    scope.$digest();
     expect(element.height()).toBe(0);
   });
 
@@ -88,10 +88,11 @@ describe('collapse directive', function () {
       scope.exp = false;
       scope.isCollapsed = false;
       scope.$digest();
-      $animate.triggerCallbacks();
+      $animate.flush();
       var collapseHeight = element.height();
       scope.exp = true;
       scope.$digest();
+      $animate.flush();
       expect(element.height()).toBeGreaterThan(collapseHeight);
     });
 
@@ -99,10 +100,11 @@ describe('collapse directive', function () {
       scope.exp = true;
       scope.isCollapsed = false;
       scope.$digest();
-      $animate.triggerCallbacks();
+      $animate.flush();
       var collapseHeight = element.height();
       scope.exp = false;
       scope.$digest();
+      $animate.flush();
       expect(element.height()).toBeLessThan(collapseHeight);
     });
 
