@@ -29,7 +29,7 @@ describe('datepicker directive', function () {
   beforeEach(inject(function(_$compile_, _$rootScope_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
-    $rootScope.date = new Date('September 30, 2010 15:30:00');
+    $rootScope.date = moment('September 30, 2010 15:30:00');
   }));
 
   function getTitleButton() {
@@ -163,7 +163,7 @@ describe('datepicker directive', function () {
     });
 
     it('value is correct', function() {
-      expect($rootScope.date).toEqual(new Date('September 30, 2010 15:30:00'));
+      expect($rootScope.date.toDate()).toEqual(new Date('September 30, 2010 15:30:00'));
     });
 
     it('has `selected` only the correct day', function() {
@@ -195,7 +195,7 @@ describe('datepicker directive', function () {
 
     it('updates the model when a day is clicked', function() {
       clickOption( 17 );
-      expect($rootScope.date).toEqual(new Date('September 15, 2010 15:30:00'));
+      expect($rootScope.date.toDate()).toEqual(new Date('September 15, 2010 15:30:00'));
     });
 
     it('moves to the previous month & renders correctly when `previous` button is clicked', function() {
@@ -217,10 +217,10 @@ describe('datepicker directive', function () {
 
     it('updates the model only when a day is clicked in the `previous` month', function() {
       clickPreviousButton();
-      expect($rootScope.date).toEqual(new Date('September 30, 2010 15:30:00'));
+      expect($rootScope.date.toDate()).toEqual(new Date('September 30, 2010 15:30:00'));
 
       clickOption( 17 );
-      expect($rootScope.date).toEqual(new Date('August 18, 2010 15:30:00'));
+      expect($rootScope.date.toDate()).toEqual(new Date('August 18, 2010 15:30:00'));
     });
 
     it('moves to the next month & renders correctly when `next` button is clicked', function() {
@@ -242,15 +242,15 @@ describe('datepicker directive', function () {
 
     it('updates the model only when a day is clicked in the `next` month', function() {
       clickNextButton();
-      expect($rootScope.date).toEqual(new Date('September 30, 2010 15:30:00'));
+      expect($rootScope.date.toDate()).toEqual(new Date('September 30, 2010 15:30:00'));
 
       clickOption( 17 );
-      expect($rootScope.date).toEqual(new Date('October 13, 2010 15:30:00'));
+      expect($rootScope.date.toDate()).toEqual(new Date('October 13, 2010 15:30:00'));
     });
 
     it('updates the calendar when a day of another month is selected', function() {
       clickOption( 33 );
-      expect($rootScope.date).toEqual(new Date('October 01, 2010 15:30:00'));
+      expect($rootScope.date.toDate()).toEqual(new Date('October 01, 2010 15:30:00'));
       expect(getTitle()).toBe('October 2010');
       expect(getLabels()).toEqual(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
       expect(getOptions(true)).toEqual([
@@ -366,7 +366,7 @@ describe('datepicker directive', function () {
       });
 
       it('does not change the model', function() {
-        expect($rootScope.date).toEqual(new Date('September 30, 2010 15:30:00'));
+        expect($rootScope.date.toDate()).toEqual(new Date('September 30, 2010 15:30:00'));
       });
 
       it('has `selected` only the correct month', function() {
@@ -406,7 +406,7 @@ describe('datepicker directive', function () {
         expect(getTitle()).toBe('2005');
 
         clickOption( 10 );
-        expect($rootScope.date).toEqual(new Date('September 30, 2010 15:30:00'));
+        expect($rootScope.date.toDate()).toEqual(new Date('September 30, 2010 15:30:00'));
         expect(getTitle()).toBe('November 2005');
         expect(getOptions(true)).toEqual([
           ['30', '31', '01', '02', '03', '04', '05'],
@@ -418,7 +418,7 @@ describe('datepicker directive', function () {
         ]);
 
         clickOption( 17 );
-        expect($rootScope.date).toEqual(new Date('November 16, 2005 15:30:00'));
+        expect($rootScope.date.toDate()).toEqual(new Date('November 16, 2005 15:30:00'));
       });
     });
 
@@ -442,7 +442,7 @@ describe('datepicker directive', function () {
       });
 
       it('does not change the model', function() {
-        expect($rootScope.date).toEqual(new Date('September 30, 2010 15:30:00'));
+        expect($rootScope.date.toDate()).toEqual(new Date('September 30, 2010 15:30:00'));
       });
 
       it('has `selected` only the selected year', function() {
@@ -491,13 +491,13 @@ describe('datepicker directive', function () {
         it('will be able to select with enter', function() {
           triggerKeyDown(element, 'left');
           triggerKeyDown(element, 'enter');
-          expect($rootScope.date).toEqual(new Date('September 29, 2010 15:30:00'));
+          expect($rootScope.date.toDate()).toEqual(new Date('September 29, 2010 15:30:00'));
         });
 
         it('will be able to select with space', function() {
           triggerKeyDown(element, 'left');
           triggerKeyDown(element, 'space');
-          expect($rootScope.date).toEqual(new Date('September 29, 2010 15:30:00'));
+          expect($rootScope.date.toDate()).toEqual(new Date('September 29, 2010 15:30:00'));
         });
 
         it('will be able to activate next day', function() {
@@ -536,7 +536,7 @@ describe('datepicker directive', function () {
         });
 
         it('will be able to activate last day of the month', function() {
-          $rootScope.date = new Date('September 1, 2010 15:30:00');
+          $rootScope.date = moment('September 1, 2010 15:30:00');
           $rootScope.$digest();
 
           triggerKeyDown(element, 'end');
@@ -623,7 +623,7 @@ describe('datepicker directive', function () {
           triggerKeyDown(element, 'enter', true);
           expect(getActiveLabel()).toBe('30');
           expect(getTitle()).toBe('August 2010');
-          expect($rootScope.date).toEqual(new Date('September 30, 2010 15:30:00'));
+          expect($rootScope.date.toDate()).toEqual(new Date('September 30, 2010 15:30:00'));
         });
       });
 
@@ -689,7 +689,7 @@ describe('datepicker directive', function () {
           triggerKeyDown(element, 'enter', true);
           expect(getActiveLabel()).toBe('September');
           expect(getTitle()).toBe('2009');
-          expect($rootScope.date).toEqual(new Date('September 30, 2010 15:30:00'));
+          expect($rootScope.date.toDate()).toEqual(new Date('September 30, 2010 15:30:00'));
         });
       });
 
@@ -986,14 +986,14 @@ describe('datepicker directive', function () {
 
   describe('formatting', function () {
     beforeEach(function() {
-      $rootScope.dayTitle = 'MMMM, yy';
+      $rootScope.dayTitle = 'MMMM, YY';
       element = $compile('<datepicker ng-model="date"' +
-        'format-day="d"' +
-        'format-day-header="EEEE"' +
+        'format-day="D"' +
+        'format-day-header="dddd"' +
         'format-day-title="{{dayTitle}}"' +
         'format-month="MMM"' +
-        'format-month-title="yy"' +
-        'format-year="yy"' +
+        'format-month-title="YY"' +
+        'format-year="YY"' +
         'year-range="10"></datepicker>')($rootScope);
       $rootScope.$digest();
     });
@@ -1045,12 +1045,12 @@ describe('datepicker directive', function () {
     var originalConfig = {};
     beforeEach(inject(function(datepickerConfig) {
       angular.extend(originalConfig, datepickerConfig);
-      datepickerConfig.formatDay = 'd';
+      datepickerConfig.formatDay = 'D';
       datepickerConfig.formatMonth = 'MMM';
-      datepickerConfig.formatYear = 'yy';
-      datepickerConfig.formatDayHeader = 'EEEE';
-      datepickerConfig.formatDayTitle = 'MMM, yy';
-      datepickerConfig.formatMonthTitle = 'yy';
+      datepickerConfig.formatYear = 'YY';
+      datepickerConfig.formatDayHeader = 'dddd';
+      datepickerConfig.formatDayTitle = 'MMM, YY';
+      datepickerConfig.formatMonthTitle = 'YY';
       datepickerConfig.showWeeks = false;
       datepickerConfig.yearRange = 10;
       datepickerConfig.startingDay = 6;
@@ -1116,7 +1116,7 @@ describe('datepicker directive', function () {
     var originalConfig = {};
     beforeEach(inject(function(datepickerPopupConfig) {
       angular.extend(originalConfig, datepickerPopupConfig);
-      datepickerPopupConfig.datepickerPopup = 'MM-dd-yyyy';
+      datepickerPopupConfig.datepickerPopup = 'MM-DD-YYYY';
 
       element = $compile('<input ng-model="date" datepicker-popup>')($rootScope);
       $rootScope.$digest();
@@ -1136,7 +1136,7 @@ describe('datepicker directive', function () {
     var originalConfig = {};
     beforeEach(inject(function (datepickerPopupConfig) {
       angular.extend(originalConfig, datepickerPopupConfig);
-      datepickerPopupConfig.datepickerPopup = 'MM-dd-yyyy';
+      datepickerPopupConfig.datepickerPopup = 'MM-DD-YYYY';
 
       element = $compile('<div><div ng-if="true"><input ng-model="date" datepicker-popup></div></div>')($rootScope);
       $rootScope.$digest();
@@ -1190,7 +1190,7 @@ describe('datepicker directive', function () {
         $document = _$document_;
         $sniffer = _$sniffer_;
         $rootScope.isopen = true;
-        $rootScope.date = new Date('September 30, 2010 15:30:00');
+        $rootScope.date = moment('September 30, 2010 15:30:00');
         var wrapElement = $compile('<div><input ng-model="date" datepicker-popup is-open="isopen"><div>')($rootScope);
         $rootScope.$digest();
         assignElements(wrapElement);
@@ -1216,7 +1216,7 @@ describe('datepicker directive', function () {
       it('updates the input when a day is clicked', function() {
         clickOption(17);
         expect(inputEl.val()).toBe('2010-09-15');
-        expect($rootScope.date).toEqual(new Date('September 15, 2010 15:30:00'));
+        expect($rootScope.date.toDate()).toEqual(new Date('September 15, 2010 15:30:00'));
       });
 
       it('should mark the input field dirty when a day is clicked', function() {
@@ -1241,9 +1241,9 @@ describe('datepicker directive', function () {
       it('updates the model & calendar when input value changes', function() {
         changeInputValueTo(inputEl, 'March 5, 1980');
 
-        expect($rootScope.date.getFullYear()).toEqual(1980);
-        expect($rootScope.date.getMonth()).toEqual(2);
-        expect($rootScope.date.getDate()).toEqual(5);
+        expect($rootScope.date.year()).toEqual(1980);
+        expect($rootScope.date.month()).toEqual(2);
+        expect($rootScope.date.date()).toEqual(5);
 
         expect(getOptions(true)).toEqual([
           ['24', '25', '26', '27', '28', '29', '01'],
@@ -1346,7 +1346,7 @@ describe('datepicker directive', function () {
           $document = _$document_;
           $timeout = _$timeout_;
           $rootScope.isopen = true;
-          $rootScope.date = new Date('September 30, 2010 15:30:00');
+          $rootScope.date = moment('September 30, 2010 15:30:00');
           var wrapElement = $compile('<div><input ng-model="date" ' +
             'ng-model-options="{ debounce: 10000 }" ' +
             'datepicker-popup><div>')($rootScope);
@@ -1357,9 +1357,9 @@ describe('datepicker directive', function () {
         it('should change model and update calendar after debounce timeout', function() {
           changeInputValueTo(inputEl, 'March 5, 1980');
 
-          expect($rootScope.date.getFullYear()).toEqual(2010);
-          expect($rootScope.date.getMonth()).toEqual(9 - 1);
-          expect($rootScope.date.getDate()).toEqual(30);
+          expect($rootScope.date.year()).toEqual(2010);
+          expect($rootScope.date.month()).toEqual(9 - 1);
+          expect($rootScope.date.date()).toEqual(30);
 
           expect(getOptions(true)).toEqual([
             ['29', '30', '31', '01', '02', '03', '04'],
@@ -1372,9 +1372,9 @@ describe('datepicker directive', function () {
 
           // No changes yet
           $timeout.flush(2000);
-          expect($rootScope.date.getFullYear()).toEqual(2010);
-          expect($rootScope.date.getMonth()).toEqual(9 - 1);
-          expect($rootScope.date.getDate()).toEqual(30);
+          expect($rootScope.date.year()).toEqual(2010);
+          expect($rootScope.date.month()).toEqual(9 - 1);
+          expect($rootScope.date.date()).toEqual(30);
 
           expect(getOptions(true)).toEqual([
             ['29', '30', '31', '01', '02', '03', '04'],
@@ -1386,9 +1386,9 @@ describe('datepicker directive', function () {
           ]);
 
           $timeout.flush(10000);
-          expect($rootScope.date.getFullYear()).toEqual(1980);
-          expect($rootScope.date.getMonth()).toEqual(2);
-          expect($rootScope.date.getDate()).toEqual(5);
+          expect($rootScope.date.year()).toEqual(1980);
+          expect($rootScope.date.month()).toEqual(2);
+          expect($rootScope.date.date()).toEqual(5);
 
           expect(getOptions(true)).toEqual([
             ['24', '25', '26', '27', '28', '29', '01'],
@@ -1431,7 +1431,7 @@ describe('datepicker directive', function () {
         beforeEach(function() {
           $rootScope.date = null;
           $rootScope.opts = {
-            'initDate': new Date('November 9, 1980')
+            'initDate': moment('November 9, 1980')
           };
           var wrapElement = $compile('<div><input ng-model="date" datepicker-popup datepicker-options="opts" is-open="true"></div>')($rootScope);
           $rootScope.$digest();
@@ -1451,7 +1451,7 @@ describe('datepicker directive', function () {
     describe('attribute `init-date`', function(){
       beforeEach(function() {
         $rootScope.date = null;
-        $rootScope.initDate = new Date('November 9, 1980');
+        $rootScope.initDate = moment('November 9, 1980');
       });
 
       describe('when initially set', function(){
@@ -1476,7 +1476,7 @@ describe('datepicker directive', function () {
           $rootScope.$digest();
           assignElements(wrapElement);
 
-          $rootScope.initDate = new Date('December 20, 1981');
+          $rootScope.initDate = moment('December 20, 1981');
           $rootScope.$digest();
         });
 
@@ -1494,13 +1494,13 @@ describe('datepicker directive', function () {
           var wrapElement = $compile('<div><input ng-model="date" datepicker-popup init-date="initDate" is-open="true"></div>')($rootScope);
           $rootScope.$digest();
           assignElements(wrapElement);
-          $rootScope.date = new Date('April 1, 1982');
-          $rootScope.initDate = new Date('December 20, 1981');
+          $rootScope.date = moment('April 1, 1982');
+          $rootScope.initDate = moment('December 20, 1981');
           $rootScope.$digest();
         });
 
         it('does not alter the model', function() {
-          expect($rootScope.date).toEqual(new Date('April 1, 1982'));
+          expect($rootScope.date.toDate()).toEqual(new Date('April 1, 1982'));
         });
 
         it('shows the correct title', function() {
@@ -1535,7 +1535,8 @@ describe('datepicker directive', function () {
 
     describe('custom format', function () {
       beforeEach(inject(function() {
-        var wrapElement = $compile('<div><input ng-model="date" datepicker-popup="dd-MMMM-yyyy"><div>')($rootScope);
+        $rootScope.date = moment($rootScope.date);
+        var wrapElement = $compile('<div><input ng-model="date" datepicker-popup="DD-MMMM-YYYY"><div>')($rootScope);
         $rootScope.$digest();
         assignElements(wrapElement);
       }));
@@ -1547,11 +1548,11 @@ describe('datepicker directive', function () {
       it('updates the input when a day is clicked', function() {
         clickOption(17);
         expect(inputEl.val()).toBe('15-September-2010');
-        expect($rootScope.date).toEqual(new Date('September 15, 2010 15:30:00'));
+        expect($rootScope.date.toDate()).toEqual(new Date('September 15, 2010 15:30:00'));
       });
 
       it('updates the input correctly when model changes', function() {
-        $rootScope.date = new Date('January 10, 1983 10:00:00');
+        $rootScope.date = moment('January 10, 1983 10:00:00');
         $rootScope.$digest();
         expect(inputEl.val()).toBe('10-January-1983');
       });
@@ -1559,7 +1560,7 @@ describe('datepicker directive', function () {
 
     describe('dynamic custom format', function () {
       beforeEach(inject(function() {
-        $rootScope.format = 'dd-MMMM-yyyy';
+        $rootScope.format = 'DD-MMMM-YYYY';
         var wrapElement = $compile('<div><input ng-model="date" datepicker-popup="{{format}}"><div>')($rootScope);
         $rootScope.$digest();
         assignElements(wrapElement);
@@ -1572,7 +1573,7 @@ describe('datepicker directive', function () {
       it('updates the input when a day is clicked', function() {
         clickOption(17);
         expect(inputEl.val()).toBe('15-September-2010');
-        expect($rootScope.date).toEqual(new Date('September 15, 2010 15:30:00'));
+        expect($rootScope.date.toDate()).toEqual(new Date('September 15, 2010 15:30:00'));
       });
 
       it('updates the input correctly when model changes', function() {
@@ -1582,22 +1583,22 @@ describe('datepicker directive', function () {
       });
 
       it('updates the input correctly when format changes', function() {
-        $rootScope.format = 'dd/MM/yyyy';
+        $rootScope.format = 'DD/MM/YYYY';
         $rootScope.$digest();
         expect(inputEl.val()).toBe('30/09/2010');
       });
     });
 
     describe('european format', function () {
-      it('dd.MM.yyyy', function() {
-        var wrapElement = $compile('<div><input ng-model="date" datepicker-popup="dd.MM.yyyy"><div>')($rootScope);
+      it('DD.MM.YYYY', function() {
+        var wrapElement = $compile('<div><input ng-model="date" datepicker-popup="DD.MM.YYYY"><div>')($rootScope);
         $rootScope.$digest();
         assignElements(wrapElement);
 
         changeInputValueTo(inputEl, '11.08.2013');
-        expect($rootScope.date.getFullYear()).toEqual(2013);
-        expect($rootScope.date.getMonth()).toEqual(7);
-        expect($rootScope.date.getDate()).toEqual(11);
+        expect($rootScope.date.year()).toEqual(2013);
+        expect($rootScope.date.month()).toEqual(7);
+        expect($rootScope.date.date()).toEqual(11);
       });
     });
 
@@ -1648,13 +1649,13 @@ describe('datepicker directive', function () {
         it('should have a button to set today date without altering time part', function() {
           var today = new Date();
           buttons.eq(0).click();
-          expect($rootScope.date.getFullYear()).toBe(today.getFullYear());
-          expect($rootScope.date.getMonth()).toBe(today.getMonth());
-          expect($rootScope.date.getDate()).toBe(today.getDate());
+          expect($rootScope.date.year()).toBe(today.getFullYear());
+          expect($rootScope.date.month()).toBe(today.getMonth());
+          expect($rootScope.date.date()).toBe(today.getDate());
 
-          expect($rootScope.date.getHours()).toBe(15);
-          expect($rootScope.date.getMinutes()).toBe(30);
-          expect($rootScope.date.getSeconds()).toBe(0);
+          expect($rootScope.date.hours()).toBe(15);
+          expect($rootScope.date.minutes()).toBe(30);
+          expect($rootScope.date.seconds()).toBe(0);
         });
 
         it('should have a button to set today date if blank', function() {
@@ -1663,13 +1664,13 @@ describe('datepicker directive', function () {
 
           var today = new Date();
           buttons.eq(0).click();
-          expect($rootScope.date.getFullYear()).toBe(today.getFullYear());
-          expect($rootScope.date.getMonth()).toBe(today.getMonth());
-          expect($rootScope.date.getDate()).toBe(today.getDate());
+          expect($rootScope.date.year()).toBe(today.getFullYear());
+          expect($rootScope.date.month()).toBe(today.getMonth());
+          expect($rootScope.date.date()).toBe(today.getDate());
 
-          expect($rootScope.date.getHours()).toBe(0);
-          expect($rootScope.date.getMinutes()).toBe(0);
-          expect($rootScope.date.getSeconds()).toBe(0);
+          expect($rootScope.date.hours()).toBe(0);
+          expect($rootScope.date.minutes()).toBe(0);
+          expect($rootScope.date.seconds()).toBe(0);
         });
 
         it('should have a button to clear value', function() {
@@ -1889,7 +1890,7 @@ describe('datepicker directive', function () {
       var weekHeader, weekElement;
       beforeEach(function() {
         $rootScope.date = null;
-        $rootScope.initDate = new Date('November 9, 1980');
+        $rootScope.initDate = moment('November 9, 1980');
         var wrapElement = $compile('<div><input ng-model="date" datepicker-popup init-date="initDate" is-open="true"></div>')($rootScope);
         $rootScope.$digest();
         assignElements(wrapElement);
@@ -1921,20 +1922,20 @@ describe('datepicker directive', function () {
     });
 
     it('sets default 00:00:00 time for selected date', function() {
-      $rootScope.date = new Date('August 1, 2013');
+      $rootScope.date = moment('August 1, 2013');
       $rootScope.$digest();
       $rootScope.date = null;
       $rootScope.$digest();
 
       clickOption(14);
-      expect($rootScope.date).toEqual(new Date('August 11, 2013 00:00:00'));
+      expect($rootScope.date.toDate()).toEqual(new Date('August 11, 2013 00:00:00'));
     });
   });
 
   describe('`init-date`', function () {
     beforeEach(inject(function() {
       $rootScope.date = null;
-      $rootScope.initDate = new Date('November 9, 1980');
+      $rootScope.initDate = moment('November 9, 1980');
       element = $compile('<datepicker ng-model="date" init-date="initDate"></datepicker>')($rootScope);
       $rootScope.$digest();
     }));
@@ -1950,7 +1951,7 @@ describe('datepicker directive', function () {
 
   describe('`datepicker-mode`', function () {
     beforeEach(inject(function() {
-      $rootScope.date = new Date('August 11, 2013');
+      $rootScope.date = moment('August 11, 2013');
       $rootScope.mode = 'month';
       element = $compile('<datepicker ng-model="date" datepicker-mode="mode"></datepicker>')($rootScope);
       $rootScope.$digest();
@@ -1985,7 +1986,7 @@ describe('datepicker directive', function () {
 
   describe('`max-mode`', function () {
     beforeEach(inject(function() {
-      $rootScope.date = new Date('August 11, 2013');
+      $rootScope.date = moment('August 11, 2013');
       element = $compile('<datepicker ng-model="date" max-mode="month"></datepicker>')($rootScope);
       $rootScope.$digest();
     }));
